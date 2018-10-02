@@ -27,7 +27,7 @@ const routes = [
   { path: '/', component: Splash},
   { path: '/browse', component: Browse},
   { path: '/browse/:id/playlist/:uri', component: Browse},
-  {path: '/auth/callback', beforeEnter}
+  {path: '/callback', beforeEnter}
 ]
 const router = new VueRouter({
   mode: 'history',

@@ -177,8 +177,8 @@ export default {
         this.SAX = this.origSAX = image.x + 'px';
         this.SAY = this.origSAY = image.y + 'px';
         setTimeout(() => {
-          this.SAX = window.innerWidth > 768 ? '10%' : '40%';
-          this.SAY = window.innerWidth < 768 ? '5%' : window.innerHeight > 700 ? '20%' : '10%';
+          this.SAX = window.innerWidth > 1150 ? '10%' : window.innerWidth > 768 ? '45%' : '40%';
+          this.SAY = window.innerWidth < 1150 ? '5%' : window.innerWidth > 900 ? '45%' : window.innerHeight > 700 ? '20%' : '10%';
         }, 100);
       });
     },

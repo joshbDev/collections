@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.text({ type: 'text/html' }));
 
 // http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+app.use(express.static('dist'));
 
 /**
  * Section 1:
@@ -62,38 +62,18 @@ app.delete(`/v1/*`, (req, res) =>
  *   Get authentication setup with the Spotify Accounts API.
  */
 
-const SpotifyWebApi = require('spotify-web-api-node');
-
-// // Replace with your redirect URI, required scopes, and show_dialog preference
+// Replace with your redirect URI, required scopes, and show_dialog preference
 const scopes = ['user-read-playback-state', 'playlist-modify-public', 'user-library-read', 'user-follow-read', 'user-modify-playback-state', 'streaming', 'user-read-birthdate', 'user-read-email', 'user-read-private'];
 const redirectUri = `https://${PROJECT_DOMAIN}.glitch.me/callback`;
 
-// // The API object we'll use to interact with the API
-const spotifyApi = new SpotifyWebApi({
-  clientId: CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  redirectUri
-});
-
 app.get("/authorize", (request, response) => {
-  response.redirect('https://accounts.spotify.com/authorize' +
-  '?response_type=code' +
-  '&client_id=' + CLIENT_ID +
-  '&scope=' + encodeURIComponent(scopes) +
-  '&redirect_uri=' + encodeURIComponent(redirectUri));
-});
-
-
-// // Exchange Authorization Code for an Access Token
-app.get("/callback", (req, res) => {
-  const authorizationCode = req.query.code;
-
-  spotifyApi.authorizationCodeGrant(authorizationCode)
-    .then(({ body: { access_token, refresh_token, expires_in } }) => {
-      res.redirect(`/auth/callback#access_token=${access_token}&refresh_token=${refresh_token}&expires_in=${expires_in}`);
-    }, err => {
-      console.log('Something went wrong when retrieving the access token!', err.message);
-    });
+  response.redirect(
+    'https://accounts.spotify.com/authorize' +
+    '?response_type=token' +
+    '&client_id=' + CLIENT_ID +
+    '&scope=' + encodeURIComponent(scopes) +
+    '&redirect_uri=' + encodeURIComponent(redirectUri)
+  );
 });
 
 /**
@@ -104,7 +84,7 @@ app.get("/callback", (req, res) => {
 // listen for requests :)
 // http://expressjs.com/en/starter/basic-routing.html
 
-app.get("/*", (req, res) => res.sendFile(`${__dirname }/views/index.html`));
+app.get("/*", (req, res) => res.sendFile(`${__dirname }/dist/index.html`));
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log(`Your app is listening on port ${ listener.address().port}`);

@@ -1,5 +1,5 @@
 <style lang="sass">
-@media (max-width: 760px) {
+@media (max-width: 1150px) {
   body {
     .sidebar {
       display: none;
@@ -69,5 +69,13 @@
       }
     }
   }
+  .collection-item.is-hovered {
+  @for $i from 0 through 3 {
+    .preview-album-#{$i} {
+        left: -$i * 70px;
+        top: $i * 10px;
+    }
+  }
+}
 }
 </style>

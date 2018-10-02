@@ -4,8 +4,9 @@
   "description": "Create and view collections of albums on Spotify.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js & webpack --config ./webpack/webpack.config.local.js --watch",
+    "start": "npm run build && node server.js",
     "build": "webpack --config ./webpack/webpack.config.prod.js",
+    "dev": "webpack --config ./webpack/webpack.config.local.js --watch & node server.js",
     "test": "jest",
     "test:ci": "npm run test"
   },
@@ -43,19 +44,18 @@
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
-    "autoprefixer": "^7.1.6",
-    "clean-webpack-plugin": "^0.1.17",
+    "autoprefixer": "^9.1.5",
+    "clean-webpack-plugin": "^0.1.19",
     "express": "4.16.3",
     "express-http-proxy": "1.2.0",
-    "html-webpack-harddisk-plugin": "^0.1.0",
-    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-harddisk-plugin": "^0.2.0",
+    "html-webpack-plugin": "^3.2.0",
     "import-loader": "^1.0.1",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.11",
     "node-fetch": "2.2.0",
-    "postcss-loader": "^2.0.8",
-    "spotify-web-api-node": "3.1.1",
-    "vue": "^2.5.16",
-    "webpack-bundle-tracker": "^0.2.0",
-    "body-parser": "1.18.2"
+    "postcss-loader": "^3.0.0",
+    "vue": "^2.5.17",
+    "webpack-bundle-tracker": "^0.3.0",
+    "body-parser": "^1.18.3"
   }
 }
