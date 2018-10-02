@@ -109,6 +109,7 @@ export default {
   },
   render(h) {
     return (<div class="browse-page">
+    <div class="mobile-header desktop-hide"><h1 class="title"><span>Collections<span class="top-banner-period">.</span></span></h1></div>
     <div class="container mobile-container">
     <Sidebar openCollection={this.clickItem} artistsCollection={[...this.artistPlaylists, this.savedArtists]} albumsCollection={[...this.albumPlaylists, this.savedAlbums]} openedUri={this.openUri} createNew={this.submitNewSidebar.bind(this)} />
     <div class="featured-collections">

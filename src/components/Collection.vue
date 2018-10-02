@@ -7,6 +7,8 @@ import { mapGetters } from 'vuex';
 import AlbumDetails from './Album-details.vue';
 import AddCollection from './Add-Collection.vue';
 import ArtistDetail from './Artist-detail.vue';
+
+let scrollHeight = 0;
 export default {
   props: {
     collection: Object,
@@ -123,6 +125,8 @@ export default {
     },
     openCollection() {
       if (this.hasExpanded) {return;}
+      scrollHeight = document.getElementsByClassName('browse-page')[0].scrollTop;
+      document.getElementsByClassName('browse-page')[0].scrollTo(0, 0);
       fireGAEvent('interaction', 'open collection', this.collection.uri);
       const item = this.$refs[`container_${this.index}`].getBoundingClientRect();
       this.x = item.x - 20 + 'px';
@@ -138,6 +142,8 @@ export default {
     },
     closeCollection() {
       fireGAEvent('interaction', 'close collection', this.collection.uri);
+      document.getElementsByClassName('browse-page')[0].scrollTo(0, scrollHeight);
+      scrollHeight = 0;
       this.isDetailsOpen = false;
       setTimeout(() => {
       this.closeItem();
