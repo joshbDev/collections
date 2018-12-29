@@ -4,10 +4,29 @@
 }
 @media (max-width: 1150px) {
   body {
-    .search-add-section .glyphicon {
-      font-size: 35px;
-      top: -40px;
-      left: 0;
+    .search-add-section {
+      .glyphicon {
+        font-size: 35px;
+        top: -40px;
+        left: 0;
+      }
+      .browse-page-display-group {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-template-rows: repeat(auto-fit, 150px);
+      }
+      .display-item-selected-transparency.glyphicon {
+        font-size: 105px;
+        top: 0px;
+        left: 0;
+      }
+      .display-item {
+        max-width: 120px;
+        min-width: 100px;
+        img {
+          width: 100px;
+          height: 100px;
+        }
+      }
     }
     .mobile-header {
       background-color: #666;
@@ -68,6 +87,7 @@
         margin-top: 0;
         position: absolute;
         bottom: 0;
+        font-size: 11px;
       }
       .image-container.is-open {
         height: 100px;

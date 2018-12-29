@@ -57,6 +57,7 @@ export default {
     closeItem() {
       this.$router.push('/browse');
       this.openUri = '';
+      document.getElementsByClassName('browse-page')[0].scrollTo(0, 0);
     },
     onWindowEvent({type, target}) {
       if (type === 'mousedown' && !document.getElementsByClassName('input-section')[0].contains(target)) {
@@ -113,9 +114,9 @@ export default {
     <div class="container mobile-container">
     <Sidebar openCollection={this.clickItem} artistsCollection={[...this.artistPlaylists, this.savedArtists]} albumsCollection={[...this.albumPlaylists, this.savedAlbums]} openedUri={this.openUri} createNew={this.submitNewSidebar.bind(this)} />
     <div class="featured-collections">
-    {!this.$route.params.uri ? <h1 class="hide-mobile"> Browse</h1> : null}
+    {!this.$route.params.uri ? <h1 class="hide-mobile"> All Your Collections</h1> : null}
     {!this.$route.params.uri ? <hr class="hide-mobile" /> : null}
-    {!this.$route.params.uri ? <h2 > Featured Collections</h2> : null}
+    {!this.$route.params.uri ? <h2 > Featured</h2> : null}
     {this.featuredCollections.map((item, index) => {
       return !this.$route.params.uri || this.openUri === item.uri ? (<div key={item.uri} class="album-collection-item"><Collection closeItem={this.closeItem} openItem={this.clickItem.bind(this)} index={index} collection={item} isOpen={this.$route.params.uri && this.openUri === item.uri} isArtist={item.name.includes(ARTISTS_PLAYLIST_KEY)}  /></div>) : <div key={index} class="album-collection-item" />;
     })}
@@ -210,7 +211,9 @@ function uriBuilder(id, uri) {
     }
   }
   hr {
-    border-top: 2px solid #efefef;
+    border-top: 2px solid orange;
+    max-width: 150px;
+    margin-left: 0;
   }
   h2, h1 {
     margin-bottom: 50px;
@@ -223,13 +226,22 @@ function uriBuilder(id, uri) {
   }
   .create-new-text {
     vertical-align: top;
-    margin-top: 75px;
     z-index: 2;
     position: relative;
     cursor: pointer;
-    width: 280px;
+    width: 200px;
+    height: 200px;
     font-weight: 700;
     transition: .5s ease-in-out;
+    span {
+      vertical-align: bottom;
+      height: 100%;
+      display: grid;
+      align-content: center;
+      &.input-section {
+        margin-left: -20px;
+      }
+    }
   }
   .add-collection-icon {
     margin-left: 10px;

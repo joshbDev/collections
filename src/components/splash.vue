@@ -70,6 +70,7 @@ export default {
   }
   h1.title {
     font-size: 60px;
+    color: black;
   }
 }
 .top-banner {

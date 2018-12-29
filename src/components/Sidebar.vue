@@ -43,6 +43,7 @@ export default {
 <style lang="sass">
 .sidebar {
   background-color: #666;
+  border-right: 5px solid orange;
   color: white;
   height: 100%;
   position: fixed;
@@ -52,6 +53,7 @@ export default {
   h1.title {
     text-align: center;
     cursor: pointer;
+    font-size: 30px;
   }
   &-item {
     font-weight: 100;
@@ -89,12 +91,8 @@ export default {
 }
 h1.title {
     text-align: center;
+    font-family: 'Major Mono Display', monospace;
     color: white;
-    text-shadow:
-   -1px -1px 0 #000,  
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
     margin-bottom: 5px;
   }
 </style>

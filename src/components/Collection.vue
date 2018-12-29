@@ -184,7 +184,7 @@ export default {
         this.SAY = this.origSAY = image.y + 'px';
         setTimeout(() => {
           this.SAX = window.innerWidth > 1150 ? '10%' : window.innerWidth > 768 ? '45%' : '40%';
-          this.SAY = window.innerWidth < 1150 ? '5%' : window.innerWidth > 900 ? '45%' : window.innerHeight > 700 ? '20%' : '10%';
+          this.SAY = window.innerWidth < 1150 ? '5%' : window.innerHeight > 700 ? '20%' : '10%';
         }, 100);
       });
     },
@@ -221,7 +221,8 @@ export default {
     {renderItems.length ? renderItems.map((item, index) => {
       const previewItem = `preview-album-${index}`;
       const isSelected = this.indexOpen === index;
-      const title = isArtistsOrSaved ? item.name : item.track.album.name;
+      const fullTitle = isArtistsOrSaved ? item.name : item.track.album.name;
+      const title = fullTitle.length > 50 ? fullTitle.split('').slice(0, 50).join('') + '...' : fullTitle;
       
       return (<div
         key={item.uri}
@@ -275,7 +276,6 @@ export default {
   grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
   grid-template-rows: repeat(auto-fit, 300px);
   width: 100%;
-  transition: .5s;
   padding-bottom: 120px;
   margin-left: 40px;
   &.is-open {
@@ -339,7 +339,7 @@ export default {
     cursor: pointer;
     transition: .25s ease-in-out;
     &:hover {
-      font-size: 32px;
+      background-color: #666;
     }
   }
   .image-container {
@@ -446,14 +446,14 @@ export default {
   text-align: left;
   transition: .5s ease-in-out;
   &:hover {
-    right: 30px;
+    color: #666;
   }
 }
 @media (max-width: 1350px) {
   body .add-album-text {
     right: 10%;
     &:hover {
-      right: 11%;
+      color: #666;
     }
   }
 }
