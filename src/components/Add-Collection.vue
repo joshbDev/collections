@@ -98,6 +98,7 @@ export default {
     width: 100%;
     left: 0;
     top: 100px;
+    text-align: center;
     .browse-page-display-group {
       display: grid;
       grid-gap: 20px;

@@ -205,9 +205,11 @@ function uriBuilder(id, uri) {
     .type-container {
       margin: 20px;
       vertical-align: top;
+      text-align: left;
     }
     .featured-collections {
       margin-bottom: 20px;
+      text-align: left;
     }
   }
   hr {

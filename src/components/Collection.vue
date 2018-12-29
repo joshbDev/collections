@@ -272,6 +272,7 @@ export default {
   color: black;
   display: grid;
   position: absolute;
+  text-align: center;
   grid-gap: 40px;
   grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
   grid-template-rows: repeat(auto-fit, 300px);
