@@ -106,6 +106,7 @@ function millisToMinutesAndSeconds(millis) {
 </script>
 <style lang="sass">
 .album-detail-page {
+  z-index: 2;
   width: 100%;
   background-color: #333;
   color: white;
@@ -117,7 +118,6 @@ function millisToMinutesAndSeconds(millis) {
   grid-template-columns: 2fr 3fr 1fr;
   grid-gap: 20px;
   transition: .5s ease-in-out;
-  z-index: 1;
   &.is-open {
     bottom: 0;
   }
@@ -159,6 +159,7 @@ function millisToMinutesAndSeconds(millis) {
   top: 0;
   left: 0;
   position: fixed;
+  z-index: 1;
 }
 
 .track-list {

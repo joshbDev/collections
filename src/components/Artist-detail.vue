@@ -197,7 +197,6 @@ function sortOldest(a, b) {
   grid-template-columns: 2fr 3fr 1fr;
   grid-gap: 20px;
   transition: .5s ease-in-out;
-  z-index: 1;
   
   &-sort-select {
     background: transparent;

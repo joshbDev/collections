@@ -46,5 +46,6 @@ new Vue({
 <style lang="sass">
 body {
   overflow: hidden;
+  zoom: .75;
 }
 </style>

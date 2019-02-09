@@ -39,7 +39,6 @@ export default {
     clickItem(uri) {
       const playlistUrl = uri.split(USER)[1].split(':').join('/');
       this.$router.push(`/browse/${playlistUrl}`);
-      this.isOpen = true;
       this.openUri = uri;
     },
     createNew({className, type}) {
@@ -109,27 +108,28 @@ export default {
     initialFetchComplete: watchForDeeplink,
   },
   render(h) {
+    const isCollectionOpen = this.$route.params.uri;
     return (<div class="browse-page">
     <div class="mobile-header desktop-hide"><h1 class="title"><span>Collections<span class="top-banner-period">.</span></span></h1></div>
     <div class="container mobile-container">
     <Sidebar openCollection={this.clickItem} artistsCollection={[...this.artistPlaylists, this.savedArtists]} albumsCollection={[...this.albumPlaylists, this.savedAlbums]} openedUri={this.openUri} createNew={this.submitNewSidebar.bind(this)} />
     <div class="featured-collections">
-    {!this.$route.params.uri ? <h1 class="hide-mobile"> All Your Collections</h1> : null}
-    {!this.$route.params.uri ? <hr class="hide-mobile" /> : null}
-    {!this.$route.params.uri ? <h2 > Featured</h2> : null}
+    {!isCollectionOpen ? <h1 class="hide-mobile"> All Your Collections</h1> : null}
+    {!isCollectionOpen ? <hr class="hide-mobile" /> : null}
+    {!isCollectionOpen ? <h2 > Featured</h2> : null}
     {this.featuredCollections.map((item, index) => {
-      return !this.$route.params.uri || this.openUri === item.uri ? (<div key={item.uri} class="album-collection-item"><Collection closeItem={this.closeItem} openItem={this.clickItem.bind(this)} index={index} collection={item} isOpen={this.$route.params.uri && this.openUri === item.uri} isArtist={item.name.includes(ARTISTS_PLAYLIST_KEY)}  /></div>) : <div key={index} class="album-collection-item" />;
+      return !isCollectionOpen || this.openUri === item.uri ? (<div key={item.uri} class="album-collection-item" style={{position: isCollectionOpen ? 'initial' : 'relative'}}><Collection closeItem={this.closeItem} openItem={this.clickItem.bind(this)} index={index} collection={item} isOpen={isCollectionOpen && this.openUri === item.uri} isArtist={item.name.includes(ARTISTS_PLAYLIST_KEY)}  /></div>) : <div key={index} class="album-collection-item" style={{position: isCollectionOpen ? 'initial' : 'relative'}} />;
     })}
     </div>
     <div class="type-container">
-    {!this.$route.params.uri ? <hr /> : null}
-    {!this.$route.params.uri ? <h2> Artists </h2> : null}
+    {!isCollectionOpen ? <hr /> : null}
+    {!isCollectionOpen ? <h2> Artists </h2> : null}
     {this.artistPlaylists.map((item, index) => {
-      return !this.$route.params.uri || this.openUri === item.uri ? (<div key={item.uri} class="album-collection-item"><Collection closeItem={this.closeItem} openItem={this.clickItem.bind(this)} index={index} collection={item} isOpen={this.$route.params.uri && this.openUri === item.uri} isArtist={true} resetPlaylists={this.resetPlaylists}   /></div>) : <div key={index} class="album-collection-item" />;
+      return !isCollectionOpen || this.openUri === item.uri ? (<div key={item.uri} class="album-collection-item" style={{position: isCollectionOpen ? 'initial' : 'relative'}}><Collection closeItem={this.closeItem} openItem={this.clickItem.bind(this)} index={index} collection={item} isOpen={isCollectionOpen && this.openUri === item.uri} isArtist={true} resetPlaylists={this.resetPlaylists}   /></div>) : <div key={index} class="album-collection-item" style={{position: isCollectionOpen ? 'initial' : 'relative'}}/>;
       }
     )}
-    {this.savedArtists.items && (!this.$route.params.uri || this.openUri === this.savedArtists.uri) ? (<div class="album-collection-item"><Collection isSaved={true} closeItem={this.closeItem} openItem={this.clickItem.bind(this)} collection={this.savedArtists} isOpen={this.$route.params.uri && this.openUri === this.savedArtists.uri} isArtist={true} /></div> ) : null}
-    {!this.$route.params.uri ? (<div class={{"create-new-text": true, 'is-focused': this.isArtistInputOpen, btn: true, 'btn-primary': true}} onClick={this.createNew.bind(this, {className: 'create-artist-input', type: ARTIST})}>
+    {this.savedArtists.items && (!isCollectionOpen || this.openUri === this.savedArtists.uri) ? (<div class="album-collection-item" style={{position: isCollectionOpen ? 'initial' : 'relative'}}><Collection isSaved={true} closeItem={this.closeItem} openItem={this.clickItem.bind(this)} collection={this.savedArtists} isOpen={isCollectionOpen && this.openUri === this.savedArtists.uri} isArtist={true} /></div> ) : null}
+    {!isCollectionOpen ? (<div class={{"create-new-text": true, 'is-focused': this.isArtistInputOpen, btn: true, 'btn-primary': true}} onClick={this.createNew.bind(this, {className: 'create-artist-input', type: ARTIST})}>
       {this.isArtistInputOpen ? <span class="input-section">
       <form onSubmit={(e) => {e.preventDefault(); this.submitNew({target: 'create-artist-input', type: ARTIST})}}>
        <input ref="create-artist-input" class="create-input create-artist-input" placeholder="New Collection" type='string' />
@@ -139,14 +139,14 @@ export default {
     </div>) : null}
     </div>
     <div class="type-container">
-    {!this.$route.params.uri ? <hr /> : null}
-    {!this.$route.params.uri ? <h2> Albums</h2> : null}
+    {!isCollectionOpen ? <hr /> : null}
+    {!isCollectionOpen ? <h2> Albums</h2> : null}
     {this.albumPlaylists.map((item, index) => {
-      return !this.$route.params.uri || this.openUri === item.uri ? (<div key={item.uri} class="album-collection-item"><Collection closeItem={this.closeItem} openItem={this.clickItem.bind(this)} index={index} collection={item} isOpen={this.$route.params.uri && this.openUri === item.uri} resetPlaylists={this.resetPlaylists} /></div>) : <div key={index} class="album-collection-item" />;
+      return !isCollectionOpen || this.openUri === item.uri ? (<div key={item.uri} class="album-collection-item" style={{position: isCollectionOpen ? 'initial' : 'relative'}}><Collection closeItem={this.closeItem} openItem={this.clickItem.bind(this)} index={index} collection={item} isOpen={isCollectionOpen && this.openUri === item.uri} resetPlaylists={this.resetPlaylists} /></div>) : <div key={index} class="album-collection-item" style={{position: isCollectionOpen ? 'initial' : 'relative'}} />;
       }
     )}
-    {this.savedAlbums.items && (!this.$route.params.uri || this.openUri === this.savedAlbums.uri) ? (<div class="album-collection-item"><Collection isSaved={true} closeItem={this.closeItem} openItem={this.clickItem.bind(this)} collection={this.savedAlbums} isOpen={this.$route.params.uri && this.openUri === this.savedAlbums.uri}  /></div>) : null}
-    {!this.$route.params.uri ? (<div class={{"create-new-text": true, 'is-focused': this.isAlbumInputOpen, btn: true, 'btn-primary': true}} onClick={this.createNew.bind(this, {className: 'create-album-input'})}>
+    {this.savedAlbums.items && (!isCollectionOpen || this.openUri === this.savedAlbums.uri) ? (<div class="album-collection-item" style={{position: isCollectionOpen ? 'initial' : 'relative'}}><Collection isSaved={true} closeItem={this.closeItem} openItem={this.clickItem.bind(this)} collection={this.savedAlbums} isOpen={isCollectionOpen && this.openUri === this.savedAlbums.uri}  /></div>) : null}
+    {!isCollectionOpen ? (<div class={{"create-new-text": true, 'is-focused': this.isAlbumInputOpen, btn: true, 'btn-primary': true}} onClick={this.createNew.bind(this, {className: 'create-album-input'})}>
       {this.isAlbumInputOpen ? <span class="input-section">
       <form onSubmit={(e) => {e.preventDefault(); this.submitNew({target: 'create-album-input', type: 'album'})}}>
        <input ref="create-album-input" class="create-input create-album-input" placeholder="New Collection" type='string' />

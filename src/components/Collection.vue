@@ -274,13 +274,14 @@ export default {
   position: absolute;
   text-align: center;
   grid-gap: 40px;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
-  grid-template-rows: repeat(auto-fit, 300px);
+  grid-template-columns: repeat(auto-fit, minmax(50px, 50px));
   width: 100%;
   padding-bottom: 120px;
   margin-left: 40px;
   &.is-open {
     margin-left: 0;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+      grid-template-rows: repeat(auto-fit, 300px);
   }
   &-title {
     position: absolute;
@@ -363,7 +364,7 @@ export default {
       box-shadow: none;
     }
     &.is-selected {
-      z-index: 2;
+      z-index: 3;
       position: fixed;
       &:hover {
         transform: rotate(0);
@@ -405,7 +406,7 @@ export default {
   @for $i from 0 through 3 {
     .preview-album-#{$i} {
       transform: rotate($i * 3deg);
-      left: -$i * 270px;
+      left: -$i * 70px;
       top: $i * 10px;
     }
   }
@@ -432,7 +433,7 @@ export default {
   }
   @for $i from 0 through 3 {
     .preview-album-#{$i} {
-      left: -$i * 260px;
+      left: -$i * 60px;
       top: $i * 12px;
     }
   }
