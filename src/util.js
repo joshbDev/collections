@@ -77,7 +77,7 @@ export function chunkArray(array = [], size = 50) {
 export function createPlaylistForSaved(tracks, type = ARTIST, me) {
   return {
     items: tracks,
-    uri: `spotify:user:${me.id}:playlist:saved ${type}`,
+    uri: `spotify:playlist:saved ${type}`,
     name: `${type === ARTIST ? ARTISTS_PLAYLIST_KEY : ALBUMS_PLAYLIST_KEY}Saved ${type[0].toUpperCase() + type.slice(1)}s`,
     isSaved: true,
     owner: {

@@ -2,7 +2,7 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import {INITIALIZE_COMMITS, SAVE_COLLECTION, ADD_ARTIST_PLAYLIST, ADD_ALBUM_PLAYLIST, INITIALIZE_FEATURED} from '../store/store';
 import Collection from './Collection.vue';
-import { ARTIST, USER, ARTISTS_PLAYLIST_KEY, DEEPLINK_URL } from '../constants';
+import { ARTIST, USER, ARTISTS_PLAYLIST_KEY, DEEPLINK_URL, SPOTIFY } from '../constants';
 import { getUserPlaylists } from '../api/api';
 import { AUTH_TOKEN_KEY } from '../auth/OAuthCallbackHandler';
 import { AUTH_TOKEN, fireGAEvent } from '../util';
@@ -27,6 +27,7 @@ export default {
     savedArtists: 'savedArtists',
     savedAlbums: 'savedAlbums',
     featuredCollections: 'featuredCollections',
+    me: 'me'
   }),
   methods: Object.assign({}, mapActions([
     INITIALIZE_COMMITS,
@@ -36,9 +37,9 @@ export default {
     ADD_ARTIST_PLAYLIST,
     ADD_ALBUM_PLAYLIST
   ]), {
-    clickItem(uri) {
-      const playlistUrl = uri.split(USER)[1].split(':').join('/');
-      this.$router.push(`/browse/${playlistUrl}`);
+    clickItem(uri, userId = this.me.id) {
+      const playlistUrl = uri.includes(USER) ?  uri.split(USER)[1].split(':').slice(1).join('/') : uri.split(SPOTIFY)[1].split(':').join('/');
+      this.$router.push(`/browse/${userId}/${playlistUrl}`);
       this.openUri = uri;
     },
     createNew({className, type}) {
@@ -162,14 +163,15 @@ export default {
 
 function watchForDeeplink(val, oldval) {
   if (Object.keys(this.$route.params).length) {
-    const isDeeplinked = [...this.albumPlaylists.filter((item) => item.uri.includes(this.$route.params.id) && item.uri.includes(this.$route.params.uri)),
-    ...this.artistPlaylists.filter((item) => item.uri.includes(this.$route.params.id) && item.uri.includes(this.$route.params.uri)),];
+    debugger;
+    const isDeeplinked = [...this.albumPlaylists.filter((item) => item.owner.id === this.$route.params.id && item.id === this.$route.params.uri),
+    ...this.artistPlaylists.filter((item) => item.owner.id === this.$route.params.id && item.id === this.$route.params.uri),];
     if (isDeeplinked.length) {
-      this.openUri = uriBuilder(this.$route.params.id, this.$route.params.uri);
+      this.openUri = uriBuilder(this.$route.params.uri);
       return;
     }
     if(this.$route.params.uri.includes('saved')) {
-      this.openUri = uriBuilder(this.$route.params.id, this.$route.params.uri);
+      this.openUri = uriBuilder(this.$route.params.uri);
       return;
     }
     getUserPlaylists(this.$route.params.id).then((res) => {
@@ -178,13 +180,13 @@ function watchForDeeplink(val, oldval) {
       if (playlist) {
         playlist.deeplink = true;
         playlist.name.includes(ARTISTS_PLAYLIST_KEY) ? this[ADD_ARTIST_PLAYLIST](playlist) : this[ADD_ALBUM_PLAYLIST](playlist);
-        this.openUri = uriBuilder(this.$route.params.id, this.$route.params.uri);
+        this.openUri = uriBuilder(this.$route.params.uri);
       }
     });
   }
 }
-function uriBuilder(id, uri) {
-  return `spotify:user:${id}:playlist:${uri}`
+function uriBuilder(uri) {
+  return `spotify:playlist:${uri}`
 }
 </script>
 <style lang="sass">

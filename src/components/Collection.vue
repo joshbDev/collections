@@ -61,16 +61,14 @@ export default {
   },
   watch: {
     isOpen(val, oldval) {
-      if (this.isOpen && !this.songs.length) {
-        setTimeout(() => {
-          this.openSearch();
-        }, 500);
-      }
       if (val && !this.showExpanded) {
         this.openCollection();
       }
       if (!val && this.showExpanded) {
         this.closeCollection();
+      }
+      if (this.isOpen && !this.songs.length) {
+        this.openSearch();
       }
     },
     songs(val, oldval) {
@@ -133,12 +131,10 @@ export default {
       this.y = item.y - 120 + 'px';
       this.hasExpanded = true;
       this.isHovered = false;
-      this.openItem(this.collection.uri);
-      setTimeout(() => {
-        this.x = 20 + 'px';
-        this.y = 130 + 'px';
-        this.showExpanded = true;
-      }, 50);
+      this.openItem(this.collection.uri, this.collection.owner.id);
+      this.x = 20 + 'px';
+      this.y = 130 + 'px';
+      this.showExpanded = true;
     },
     closeCollection() {
       fireGAEvent('interaction', 'close collection', this.collection.uri);
@@ -275,13 +271,14 @@ export default {
   text-align: center;
   grid-gap: 40px;
   grid-template-columns: repeat(auto-fit, minmax(50px, 50px));
-  width: 100%;
+  width: 130%;
   padding-bottom: 120px;
   margin-left: 40px;
   &.is-open {
     margin-left: 0;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
-      grid-template-rows: repeat(auto-fit, 300px);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+    grid-template-rows: repeat(auto-fit, 300px);
+    width: 100%;
   }
   &-title {
     position: absolute;

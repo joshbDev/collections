@@ -5,6 +5,7 @@ export const ALBUM = 'album';
 export const URL_SPLIT = 'https://api.spotify.com';
 export const USER = 'user:';
 export const DEEPLINK_URL = 'deeplink-url';
+export const SPOTIFY = 'spotify:';
 export const SAMPLE_PLAYLISTS = [
   ['jblaney3788', '5oQDnA6Stthutsawpn2VcG'],
   ['jblaney3788', '6UeCfl3bzNpdob3Kobu1aC'],

@@ -26,12 +26,12 @@ export default {
     <div class='sidebar-title'>Artists</div>
     {this.artistsCollection.length && this.artistsCollection.map((item) => {
       if (!item.name) {return;}
-      return (<div onClick={this.openCollection.bind(this, item.uri)} class={{'sidebar-item': true, 'is-selected': this.openedUri === item.uri}}>{item.name.split(ARTISTS_PLAYLIST_KEY)[1]}</div>);
+      return (<div onClick={this.openCollection.bind(this, item.uri, item.owner.id)} class={{'sidebar-item': true, 'is-selected': this.openedUri === item.uri}}>{item.name.split(ARTISTS_PLAYLIST_KEY)[1]}</div>);
     })}
     <div class='sidebar-title'>Albums</div>
     {this.artistsCollection.length && this.albumsCollection.map((item) => {
       if (!item.name) {return;}
-      return (<div onClick={this.openCollection.bind(this, item.uri)} class={{'sidebar-item': true, 'is-selected': this.openedUri === item.uri}}>{item.name.split(ALBUMS_PLAYLIST_KEY)[1]}</div>);
+      return (<div onClick={this.openCollection.bind(this, item.uri, item.owner.id)} class={{'sidebar-item': true, 'is-selected': this.openedUri === item.uri}}>{item.name.split(ALBUMS_PLAYLIST_KEY)[1]}</div>);
     })}
     <span class="padding-bottom" />
     </div>
